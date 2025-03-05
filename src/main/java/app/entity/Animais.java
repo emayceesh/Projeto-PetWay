@@ -1,16 +1,6 @@
 package app.entity;
 
-<<<<<<< HEAD
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
-public class Animais {
-
-	@ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
-	
-=======
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,5 +24,5 @@ public class Animais {
 	 
 	 private Boolean cadastroCompleto;
 	 
->>>>>>> 1b2afe795c4580036ca129246367f79a4db1c6e7
+
 }
