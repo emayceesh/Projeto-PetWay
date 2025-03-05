@@ -36,7 +36,7 @@ public class AnimaisService {
             return "Animal não encontrado para exclusão";
         }
         
-        this.animaisRepository.deleteById(id);  // Deleta o animal pelo ID
+        this.animaisRepository.deleteById(id); 
         return "Animal deletado com sucesso!";
     }
 
@@ -44,10 +44,10 @@ public class AnimaisService {
         return this.animaisRepository.findByNomeCompletoStartingWith(nome);  
     }
 
-	public List<Animais> findAll() {
+	public List<Animais>  findAll() {
 
 		List<Animais> listaAnimais = this.animaisRepository.findAll();
 
 		return listaAnimais;
-	}
+	 }
 }
