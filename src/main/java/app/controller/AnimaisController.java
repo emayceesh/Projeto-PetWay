@@ -65,4 +65,15 @@ public class AnimaisController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("/findAll")
+	public ResponseEntity <List<Animais>> findAll(){
+    	
+		try {
+			List<Animais> listaAnimais = this.animaisService.findAll();
+			return new ResponseEntity<>(listaAnimais, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity <>(null, HttpStatus.BAD_REQUEST);
+		}
+
+	}
 }

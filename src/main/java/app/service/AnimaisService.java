@@ -43,4 +43,11 @@ public class AnimaisService {
     public List<Animais> findByNomeCompleto(String nome) {
         return this.animaisRepository.findByNomeCompletoStartingWith(nome);  
     }
+
+	public List<Animais> findAll() {
+
+		List<Animais> listaAnimais = this.animaisRepository.findAll();
+
+		return listaAnimais;
+	}
 }
