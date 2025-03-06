@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,10 @@ public class Cliente {
 	
 	@CPF
 	private String cpf;
+	
+	@NotBlank(message = "Campo não pode estar vazio")
+	@Pattern(regexp = "\\d{10,15}", message = "O telefone deve conter apenas números")
+	private String celular;
 	
 	private String telefone;
 	
