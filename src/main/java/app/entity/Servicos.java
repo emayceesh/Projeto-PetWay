@@ -36,10 +36,10 @@ public class Servicos {
 	private String descricao;
 	
 	@NotNull(message = "O preço do serviço é obrigatório")
-	private BigDecimal preco;
+	private BigDecimal preco;//li por ai que BigDecimal é melhor pra quando for lidar com dinheiro
 	
 	@NotNull(message = "A duração do serviço é obrigatória")
-	private Integer duracao;
+	private Integer duracao;//duração em minutos
 	
 	private Boolean disponivel;
 	
