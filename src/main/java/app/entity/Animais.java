@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,13 +23,19 @@ public class Animais {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
    
+    @NotNull
+    @NotBlank(message = "Nome não pode estar vazio!")
+    @Pattern(regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ' ]{3,100}$", message = "O nome deve conter apenas letras!")
+    private String nomeAnimal;
 
-    @NotBlank(message = "Nome não pode ser Nulo.")
-    private String nome;
-
-    @NotBlank(message = "Sexo não pode ser nulo rs ")
+    @NotBlank(message = "Sexo não pode estar vazio!")
     private String sexoAnimal;
 
+    @NotNull
+    @NotBlank(message = "Porte do animal não pode estar vazio!")
+    private String porte;
+    
+    private String cor;
     private Boolean cadastroCompleto;
 
     public Long getId() {

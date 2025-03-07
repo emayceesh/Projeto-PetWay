@@ -33,6 +33,7 @@ public class Cliente {
 	
 	@NotNull
 	@NotBlank(message = "Nome não pode estar vazio!")
+	@Pattern(regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ' ]{3,100}$", message = "O nome deve conter apenas letras!")
 	private String nomeCliente;
 	
 	@NotNull
@@ -59,6 +60,7 @@ public class Cliente {
 	private List<Animais> animais;
 	
 	@OneToMany(mappedBy = "cliente")
+	@JsonIgnoreProperties("cliente")
 	private List<Agendamento> agendamentos;
 	
 	
