@@ -32,6 +32,8 @@ public class ClienteService {
 		return "Aluno alterado com sucesso";
 	}
 
+	
+	//Verifica se já existe o cpf que está sendo cadastrado OU alterado 
 	public void verificarCpfCliente(String cpf) {
 		List<Cliente> clienteComCpf = clienteRepository.findByCpf(cpf);
 		if (!clienteComCpf.isEmpty()) {
@@ -39,6 +41,7 @@ public class ClienteService {
 		}
 	}
 
+	//Verifica se o cliente tem um telefone cadastrado, p/ cadastraCompleto setar true ou false
 	public void verificarTelefoneCliente(Cliente cliente) {
 		if (cliente.getTelefone() == null || cliente.getTelefone().isEmpty()) {
 			cliente.setCadastroCompleto(false);
@@ -78,7 +81,7 @@ public class ClienteService {
 	}
 
 	public List<Cliente> findByCelular(String celular) {
-		return this.clienteRepository.findByTelefoneContaining(celular);
+		return this.clienteRepository.findByCelularContaining(celular);
 	}
 
 }

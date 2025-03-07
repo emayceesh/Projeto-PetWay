@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,23 +31,36 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@NotBlank(message = "O nome não pode estar vazio")
+	@NotNull
+	@NotBlank(message = "Nome não pode estar vazio!")
 	private String nomeCliente;
 	
+	@NotNull
 	@CPF
+	@NotBlank(message = "CPF não pode estar vazio!")
 	private String cpf;
 	
-	@NotBlank(message = "Campo não pode estar vazio")
-	@Pattern(regexp = "\\d{10,15}", message = "O telefone deve conter apenas números")
+	@NotNull
+	@NotBlank(message = "Celular não pode estar vazio!")
+	@Pattern(regexp = "\\d{10,15}", message = "O celular deve conter apenas números")
 	private String celular;
 	
+	@Pattern(regexp = "\\d{10,15}", message = "O telefone deve conter apenas números")
 	private String telefone;
 	
-	private Boolean cadastroCompleto;
+	@NotNull
+	@NotBlank(message = "Endereço não pode estar vazio!")
+	private String endereco;
+	
+	private Boolean cadastroCompleto;	
 	
 	@OneToMany(mappedBy = "cliente")
 	@JsonIgnoreProperties("cliente")
 	private List<Animais> animais;
+	
+	@OneToMany(mappedBy = "cliente")
+	private List<Agendamento> agendamentos;
+	
 	
 	
 }
