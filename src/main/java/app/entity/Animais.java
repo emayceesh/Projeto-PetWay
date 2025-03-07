@@ -51,14 +51,10 @@ public class Animais {
     @JoinColumn(name = "fk_cliente_id")
     private Cliente cliente;
     
-    @ManyToMany
+    @ManyToMany(mappedBy = "animais")
     @JsonIgnoreProperties("animais")
-    @JoinTable(
-        name = "animal_agendamento",
-        joinColumns = @JoinColumn(name = "fk_animal_id"),
-        inverseJoinColumns = @JoinColumn(name = "fk_agendamento_id")
-    )
     private List<Agendamento> agendamentos;
+
     
     public Long getId() {
         return id;

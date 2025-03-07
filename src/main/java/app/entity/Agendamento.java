@@ -1,5 +1,6 @@
 package app.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -31,26 +32,33 @@ public class Agendamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @NotBlank(message = "Data não pode estar vazia.")
-    private String data;
+    @NotNull(message = "Data e hora não podem estar vazias!")
+    private LocalDateTime dataHora;
     
     @NotNull
     @NotBlank(message = "Hora não pode estar vazia.")
     private String hora;
     
-    private Boolean buscarEntregar = false;
+    private String status;//agendado, cancelado, concluido
+    
+    private Boolean buscarEntregar = false;//começa em false já, caso seja true, tera busca e entrega do pet
     
     @Size(max = 100, message = "Observação deve ter no máximo 100 caracteres.")
-    private String observacao;
+    private String observacoes;
 
     @ManyToOne
     @JoinColumn(name = "fk_cliente_id")
     private Cliente cliente;
     
-    @ManyToMany(mappedBy = "agendamento")
-    @JsonIgnoreProperties("agendamento")
+    @ManyToMany
+    @JoinTable(
+        name = "agendamento_animal",
+        joinColumns = @JoinColumn(name = "agendamento_id"),
+        inverseJoinColumns = @JoinColumn(name = "animal_id")
+    )
+    @JsonIgnoreProperties("agendamentos")
     private List<Animais> animais;
+
     
     @ManyToMany
 	@JoinTable(

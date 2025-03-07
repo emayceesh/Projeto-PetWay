@@ -36,7 +36,7 @@ public class Cliente {
 	@Pattern(regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ' ]{3,100}$", message = "O nome deve conter apenas letras!")
 	private String nomeCliente;
 	
-	@NotNull
+	
 	@CPF
 	@NotBlank(message = "CPF não pode estar vazio!")
 	private String cpf;
