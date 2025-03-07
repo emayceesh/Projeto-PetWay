@@ -1,9 +1,17 @@
 package app.entity;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -38,6 +46,19 @@ public class Animais {
     private String cor;
     private Boolean cadastroCompleto;
 
+    @ManyToOne
+    @JoinColumn(name = "fk_cliente_id")
+    private Cliente cliente;
+    
+    @ManyToMany
+    @JsonIgnoreProperties("animais")
+    @JoinTable(
+        name = "animal_agendamento",
+        joinColumns = @JoinColumn(name = "fk_animal_id"),
+        inverseJoinColumns = @JoinColumn(name = "fk_agendamento_id")
+    )
+    private List<Agendamento> agendamentos;
+    
     public Long getId() {
         return id;
     }
