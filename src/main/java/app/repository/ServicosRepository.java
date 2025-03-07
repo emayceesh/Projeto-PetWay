@@ -10,6 +10,6 @@ public interface ServicosRepository extends JpaRepository<Servicos, Long>{
 
 	public List<Servicos> findByNomeServicoIgnoreCaseStartingWith(String nome);
 	
-	public List<Servicos> findByDisponivelIgnoreCaseStartingWith (Boolean disponivel);
+	public List<Servicos> findByDisponivel (Boolean disponivel);
 	
 }

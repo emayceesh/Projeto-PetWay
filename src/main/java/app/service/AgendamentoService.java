@@ -58,4 +58,8 @@ public class AgendamentoService {
 	public List<Agendamento> buscarPorCliente(Long clienteId) {
         return agendamentoRepository.findByClienteId(clienteId);
     }
+	
+	public List<Agendamento> buscarPorNomeServico(String nomeServico){
+		return agendamentoRepository.buscarAgendamentoPorNomeServico(nomeServico);
+	}
 }

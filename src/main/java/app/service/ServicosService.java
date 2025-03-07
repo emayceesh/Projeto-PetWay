@@ -52,8 +52,8 @@ public class ServicosService {
 		return this.servicosRepository.findByNomeServicoIgnoreCaseStartingWith(nome);
 	}
 
-	public List<Servicos> findByDisponivelIgnoreCaseStartingWith(Boolean disponivel) {
-		return this.servicosRepository.findByDisponivelIgnoreCaseStartingWith(disponivel);
+	public List<Servicos> findByDisponivel(Boolean disponivel) {
+		return this.servicosRepository.findByDisponivel(disponivel);
 	}
 
 }

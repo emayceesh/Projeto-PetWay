@@ -20,17 +20,15 @@ import app.service.ProdutosService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/estoque")
+@RequestMapping("/api/produtos")
 public class ProdutosController {
 
     @Autowired
     private ProdutosService estoqueService;
 
-    // Método para salvar ou atualizar um produto no estoque
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody @Valid Produtos estoque) {
         try {
-            // Chama o método de serviço que irá salvar ou atualizar a quantidade do produto
             String mensagem = this.estoqueService.save(estoque);
             return new ResponseEntity<>(mensagem, HttpStatus.OK);
         } catch (Exception e) {
@@ -38,11 +36,9 @@ public class ProdutosController {
         }
     }
 
-    // Método para atualizar um produto no estoque
     @PutMapping("/update/{id}")
     public ResponseEntity<String> update(@RequestBody Produtos estoque, @PathVariable long id) {
         try {
-            // Chama o método de serviço para atualizar o produto
             String mensagem = this.estoqueService.update(estoque, id);
             return new ResponseEntity<>(mensagem, HttpStatus.OK);
         } catch (Exception e) {
@@ -50,19 +46,16 @@ public class ProdutosController {
         }
     }
 
-    // Método para deletar um produto do estoque
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable long id) {
         try {
-            // Chama o método de serviço para deletar o produto
             String mensagem = this.estoqueService.delete(id);
             return new ResponseEntity<>(mensagem, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Erro ao deletar produto: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
-    // Método para listar todos os produtos no estoque
+    
     @GetMapping("/findAll")
     public ResponseEntity<List<Produtos>> findAll() {
         try {
@@ -73,7 +66,6 @@ public class ProdutosController {
         }
     }
 
-    // Método para buscar produtos pelo nome
     @GetMapping("/findByNome")
     public ResponseEntity<List<Produtos>> findByNome(@RequestParam String nome) {
         try {

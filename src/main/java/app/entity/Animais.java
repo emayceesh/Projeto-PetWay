@@ -44,8 +44,8 @@ public class Animais {
     private String sexoAnimal;
 
     @NotNull
-    @NotBlank(message = "Porte do animal não pode estar vazio!")//pequeno, medio, grande
-    private String porte;
+    @NotBlank(message = "Porte do animal não pode estar vazio!")
+    private String porte;//pequeno, medio, grande
     
     private String cor;
 

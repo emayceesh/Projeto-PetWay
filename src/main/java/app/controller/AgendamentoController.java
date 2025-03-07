@@ -96,21 +96,42 @@ public class AgendamentoController {
 	}
 
 	@GetMapping("/buscarPorStatus")
-	public ResponseEntity<List<Agendamento>> buscarAgendamentosPorStatus(@RequestParam("status") String status) {
-		List<Agendamento> agendamentos = agendamentoService.findByStatus(status);
-		if (agendamentos.isEmpty()) {
-			return ResponseEntity.notFound().build();
+	public ResponseEntity<List<Agendamento>> buscarAgendamentosPorStatus(@RequestParam String status) {
+		try {
+			List<Agendamento> agendamentos = agendamentoService.findByStatus(status);
+			if (agendamentos.isEmpty()) {
+				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<>(agendamentos, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
-		return ResponseEntity.ok(agendamentos);
 	}
 
 	@GetMapping("/buscarPorCliente/{clienteId}")
 	public ResponseEntity<List<Agendamento>> buscarAgendamentosPorCliente(@PathVariable Long clienteId) {
-		List<Agendamento> agendamentos = agendamentoService.buscarPorCliente(clienteId);
-		if (agendamentos.isEmpty()) {
-			return ResponseEntity.notFound().build(); 
+		try {
+			List<Agendamento> agendamentos = agendamentoService.buscarPorCliente(clienteId);
+			if (agendamentos.isEmpty()) {
+				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<>(agendamentos, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
-		return ResponseEntity.ok(agendamentos); 
+	}
+
+	@GetMapping("/buscarPorServico")
+	public ResponseEntity<List<Agendamento>> buscarPorNomeServico(@RequestParam String nomeServico) {
+		try {
+			List<Agendamento> agendamentos = agendamentoService.buscarPorNomeServico(nomeServico);
+			if (agendamentos.isEmpty()) {
+				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<>(agendamentos, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
 	}
 
 }

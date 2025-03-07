@@ -96,9 +96,9 @@ public class ServicosController {
 	}
 	
 	@GetMapping("/findByDisponibilidade")
-	public ResponseEntity<List<Servicos>> findByDisponivelIgnoreCaseStartingWith(@RequestParam Boolean disponivel) {
+	public ResponseEntity<List<Servicos>> findByDisponivel(@RequestParam Boolean disponivel) {
 		try {
-			List<Servicos> lista = this.servicosService.findByDisponivelIgnoreCaseStartingWith(disponivel); 
+			List<Servicos> lista = this.servicosService.findByDisponivel(disponivel); 
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
