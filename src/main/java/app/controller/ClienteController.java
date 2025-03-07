@@ -94,10 +94,10 @@ public class ClienteController {
 	}
 	
 	@GetMapping("/findByNome")
-	public ResponseEntity<List<Cliente>> findByNomeClienteStartingWith(@RequestParam String nome) {
+	public ResponseEntity<List<Cliente>> findByNomeClienteIgnoreCaseStartingWith(@RequestParam String nome) {
 		
 		try {
-			List<Cliente> lista = this.clienteService.findByNomeCliente(nome);
+			List<Cliente> lista = this.clienteService.findByNomeClienteIgnoreCaseStartingWith(nome);
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

@@ -75,9 +75,9 @@ public class ClienteService {
 		return this.clienteRepository.findByCpf(cpf);
 	}
 
-	public List<Cliente> findByNomeCliente(String nome) {
+	public List<Cliente> findByNomeClienteIgnoreCaseStartingWith(String nome) {
 
-		return this.clienteRepository.findByNomeClienteStartingWith(nome);
+		return this.clienteRepository.findByNomeClienteIgnoreCaseStartingWith(nome);
 	}
 
 	public List<Cliente> findByCelular(String celular) {

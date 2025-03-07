@@ -40,8 +40,12 @@ public class AnimaisService {
         return "Animal deletado com sucesso!";
     }
 
-    public List<Animais> findByNomeCompleto(String nome) {
-        return this.animaisRepository.findByNomeCompletoStartingWith(nome);  
+    public List<Animais> findByNomeAnimalIgnoreCaseStartingWith(String nome) {
+        return this.animaisRepository.findByNomeAnimalIgnoreCaseStartingWith(nome);  
+    }
+    
+    public List<Animais> findByRacaIgnoreCaseContaining(String raca){
+    	return this.animaisRepository.findByRacaIgnoreCaseContaining(raca);
     }
 
 	public List<Animais>  findAll() {

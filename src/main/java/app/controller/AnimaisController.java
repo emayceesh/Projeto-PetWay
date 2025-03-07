@@ -2,8 +2,10 @@ package app.controller;
 
 import java.util.List;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,9 +59,9 @@ public class AnimaisController {
     }
 
     @GetMapping("/findByNome")
-    public ResponseEntity<List<Animais>> findByNomeCompleto(@RequestParam String nome) {
+    public ResponseEntity<List<Animais>> findByNomeAnimal(@RequestParam String nome) {
         try {
-            List<Animais> lista = this.animaisService.findByNomeCompleto(nome);
+            List<Animais> lista = this.animaisService.findByNomeAnimalIgnoreCaseStartingWith(nome);
             return new ResponseEntity<>(lista, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -76,4 +78,15 @@ public class AnimaisController {
 		}
 
 	}
+    
+    @GetMapping("/buscarPorRaca")
+    public ResponseEntity<List<Animais>> findByRacaIgnoreCaseContaining(@RequestParam String raca){
+    	try {
+			List<Animais> lista = this.animaisService.findByRacaIgnoreCaseContaining(raca);
+			return new ResponseEntity<>(lista, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+			
+		}
+    }
 }

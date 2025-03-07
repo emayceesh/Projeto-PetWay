@@ -36,16 +36,18 @@ public class Animais {
     @Pattern(regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ' ]{3,100}$", message = "O nome deve conter apenas letras!")
     private String nomeAnimal;
 
+    @NotBlank(message = "Raça não pode estar vazio.")
+    private String raca;
+    
     @NotNull
     @NotBlank(message = "Sexo não pode estar vazio!")
     private String sexoAnimal;
 
     @NotNull
-    @NotBlank(message = "Porte do animal não pode estar vazio!")
+    @NotBlank(message = "Porte do animal não pode estar vazio!")//pequeno, medio, grande
     private String porte;
     
     private String cor;
-    private Boolean cadastroCompleto;
 
     @ManyToOne
     @JoinColumn(name = "fk_cliente_id")

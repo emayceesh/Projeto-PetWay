@@ -8,6 +8,8 @@ import app.entity.Animais;
 
 public interface AnimaisRepository extends JpaRepository<Animais, Long> {
 
-	public List<Animais> findByNomeCompletoStartingWith(String nome);
+	public List<Animais> findByNomeAnimalIgnoreCaseStartingWith(String nome);
+	
+	public List<Animais> findByRacaIgnoreCaseContaining(String raca);
 	
 }

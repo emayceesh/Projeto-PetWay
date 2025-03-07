@@ -8,7 +8,7 @@ import app.entity.Cliente;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 
-	public List<Cliente> findByNomeClienteStartingWith(String nome);
+	public List<Cliente> findByNomeClienteIgnoreCaseStartingWith(String nome);
 	
 	public List<Cliente> findByCelularContaining(String celular);
 	
