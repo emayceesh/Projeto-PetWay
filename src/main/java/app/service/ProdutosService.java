@@ -5,23 +5,23 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import app.entity.Estoque;
-import app.repository.EstoqueRepository;
+import app.entity.Produtos;
+import app.repository.ProdutosRepository;
 
 @Service
-public class EstoqueService {
+public class ProdutosService {
 
     @Autowired
-    private EstoqueRepository estoqueRepository;
+    private ProdutosRepository estoqueRepository;
 
   
-    public String save(Estoque estoque) {
+    public String save(Produtos estoque) {
         if (estoque.getId() == null) {
             return "ID do produto não pode ser nulo!";
         }
 
  
-        Estoque produtoExistente = estoqueRepository.findById(estoque.getId()).orElse(null);
+        Produtos produtoExistente = estoqueRepository.findById(estoque.getId()).orElse(null);
 
         if (produtoExistente != null) {
             
@@ -36,7 +36,7 @@ public class EstoqueService {
     }
 
     
-    public String update(Estoque estoque, long id) {
+    public String update(Produtos estoque, long id) {
         if (!estoqueRepository.existsById(id)) {
             return "Produto não encontrado no estoque!";
         }
@@ -57,12 +57,12 @@ public class EstoqueService {
     }
 
    
-    public List<Estoque> findAll() {
+    public List<Produtos> findAll() {
         return estoqueRepository.findAll(); 
     }
 
    
-    public List<Estoque> findByNome(String nome) {
+    public List<Produtos> findByNome(String nome) {
         return estoqueRepository.findByNomeStartingWith(nome); 
     }
 }

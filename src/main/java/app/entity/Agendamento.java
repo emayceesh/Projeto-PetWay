@@ -9,10 +9,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +32,7 @@ public class Agendamento {
     private Long id;
 
     @NotNull
-    @NotBlank(message = "Data não pode esar vazia.")
+    @NotBlank(message = "Data não pode estar vazia.")
     private String data;
     
     @NotNull
@@ -39,6 +41,7 @@ public class Agendamento {
     
     private Boolean buscarEntregar = false;
     
+    @Size(max = 100, message = "Observação deve ter no máximo 100 caracteres.")
     private String observacao;
 
     @ManyToOne
@@ -48,6 +51,15 @@ public class Agendamento {
     @ManyToMany(mappedBy = "agendamento")
     @JsonIgnoreProperties("agendamento")
     private List<Animais> animais;
+    
+    @ManyToMany
+	@JoinTable(
+	    name = "agendamento_servico",
+	    joinColumns = @JoinColumn(name = "agendamento_id"),
+	    inverseJoinColumns = @JoinColumn(name = "servico_id")
+	)
+	@JsonIgnoreProperties("agendamentos")
+	private List<Servicos> servicos;
 
 	public void setId(long id) {
 		this.id = id;

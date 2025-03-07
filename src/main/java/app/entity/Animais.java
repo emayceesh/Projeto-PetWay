@@ -36,6 +36,7 @@ public class Animais {
     @Pattern(regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ' ]{3,100}$", message = "O nome deve conter apenas letras!")
     private String nomeAnimal;
 
+    @NotNull
     @NotBlank(message = "Sexo não pode estar vazio!")
     private String sexoAnimal;
 

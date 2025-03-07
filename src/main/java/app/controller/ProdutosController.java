@@ -15,20 +15,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.entity.Estoque;
-import app.service.EstoqueService;
+import app.entity.Produtos;
+import app.service.ProdutosService;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/estoque")
-public class EstoqueController {
+public class ProdutosController {
 
     @Autowired
-    private EstoqueService estoqueService;
+    private ProdutosService estoqueService;
 
     // Método para salvar ou atualizar um produto no estoque
     @PostMapping("/save")
-    public ResponseEntity<String> save(@RequestBody @Valid Estoque estoque) {
+    public ResponseEntity<String> save(@RequestBody @Valid Produtos estoque) {
         try {
             // Chama o método de serviço que irá salvar ou atualizar a quantidade do produto
             String mensagem = this.estoqueService.save(estoque);
@@ -40,7 +40,7 @@ public class EstoqueController {
 
     // Método para atualizar um produto no estoque
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> update(@RequestBody Estoque estoque, @PathVariable long id) {
+    public ResponseEntity<String> update(@RequestBody Produtos estoque, @PathVariable long id) {
         try {
             // Chama o método de serviço para atualizar o produto
             String mensagem = this.estoqueService.update(estoque, id);
@@ -64,9 +64,9 @@ public class EstoqueController {
 
     // Método para listar todos os produtos no estoque
     @GetMapping("/findAll")
-    public ResponseEntity<List<Estoque>> findAll() {
+    public ResponseEntity<List<Produtos>> findAll() {
         try {
-            List<Estoque> lista = this.estoqueService.findAll();
+            List<Produtos> lista = this.estoqueService.findAll();
             return new ResponseEntity<>(lista, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -75,9 +75,9 @@ public class EstoqueController {
 
     // Método para buscar produtos pelo nome
     @GetMapping("/findByNome")
-    public ResponseEntity<List<Estoque>> findByNome(@RequestParam String nome) {
+    public ResponseEntity<List<Produtos>> findByNome(@RequestParam String nome) {
         try {
-            List<Estoque> lista = this.estoqueService.findByNome(nome);
+            List<Produtos> lista = this.estoqueService.findByNome(nome);
             return new ResponseEntity<>(lista, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
