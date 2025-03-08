@@ -3,10 +3,12 @@ package app.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import app.entity.Cliente;
 import app.repository.ClienteRepository;
 
+@Service
 public class ClienteService {
 
 	@Autowired
@@ -18,7 +20,7 @@ public class ClienteService {
 		this.verificarCpfCliente(cliente.getCpf());
 
 		this.clienteRepository.save(cliente);
-		return "Aluno matriculado com sucesso!";
+		return "Cliente cadastrado com sucesso!";
 	}
 
 	public String update(Cliente cliente, long id) {
@@ -29,7 +31,7 @@ public class ClienteService {
 		cliente.setId(id);
 		this.clienteRepository.save(cliente);
 
-		return "Aluno alterado com sucesso";
+		return "Cliente alterado com sucesso!";
 	}
 
 	
@@ -43,7 +45,7 @@ public class ClienteService {
 
 	//Verifica se o cliente tem um telefone cadastrado, p/ cadastraCompleto setar true ou false
 	public void verificarTelefoneCliente(Cliente cliente) {
-		if (cliente.getTelefone() == null || cliente.getTelefone().isEmpty()) {
+		if (cliente.getTelefone() == null || cliente.getTelefone().trim().isEmpty()) {
 			cliente.setCadastroCompleto(false);
 		} else {
 			cliente.setCadastroCompleto(true);
@@ -54,7 +56,7 @@ public class ClienteService {
 
 		this.clienteRepository.deleteById(id);
 
-		return "Aluno deletado comm sucesso!";
+		return "Cliente excluido com sucesso!";
 	}
 
 	public List<Cliente> findAll() {

@@ -37,7 +37,6 @@ public class Cliente {
 	private String nomeCliente;
 	
 	
-	@CPF
 	@NotBlank(message = "CPF não pode estar vazio!")
 	private String cpf;
 	
@@ -46,7 +45,6 @@ public class Cliente {
 	@Pattern(regexp = "\\d{10,15}", message = "O celular deve conter apenas números")
 	private String celular;
 	
-	@Pattern(regexp = "\\d{10,15}", message = "O telefone deve conter apenas números")
 	private String telefone;
 	
 	@NotNull
