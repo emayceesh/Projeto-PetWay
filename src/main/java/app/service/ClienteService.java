@@ -25,9 +25,6 @@ public class ClienteService {
 
 	public String update(Cliente cliente, long id) {
 
-		this.verificarTelefoneCliente(cliente);
-		this.verificarCpfCliente(cliente.getCpf());
-
 		cliente.setId(id);
 		this.clienteRepository.save(cliente);
 

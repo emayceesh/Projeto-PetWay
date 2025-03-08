@@ -35,6 +35,7 @@ public class Produtos {
     @NotNull(message = "A quantidade em estoque é obrigatória")
     private Integer quantidade;
     
+    @NotBlank
     private String categoria;//Ração, Brinquedos, Acessórios, Medicamentos etc.
 
 }

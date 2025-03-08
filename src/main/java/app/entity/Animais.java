@@ -51,6 +51,7 @@ public class Animais {
 
     @ManyToOne
     @JoinColumn(name = "fk_cliente_id")
+    @JsonIgnoreProperties("animais")
     private Cliente cliente;
     
     @ManyToMany(mappedBy = "animais")

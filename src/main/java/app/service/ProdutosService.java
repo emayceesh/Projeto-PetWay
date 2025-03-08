@@ -12,52 +12,56 @@ import app.repository.ProdutosRepository;
 public class ProdutosService {
 
 	@Autowired
-	private ProdutosRepository estoqueRepository;
+	private ProdutosRepository produtoRepository;
 
-	public String save(Produtos estoque) {
-		if (estoque.getId() == null) {
+	public String save(Produtos produto) {
+		if (produto.getId() == null) {
 			return "ID do produto não pode ser nulo!";
 		}
 
-		Produtos produtoExistente = estoqueRepository.findById(estoque.getId()).orElse(null);
+		Produtos produtoExistente = produtoRepository.findById(produto.getId()).orElse(null);
 
 		if (produtoExistente != null) {
 
-			produtoExistente.setQuantidade(produtoExistente.getQuantidade() + estoque.getQuantidade()); // Aqui soma a
+			produtoExistente.setQuantidade(produtoExistente.getQuantidade() + produto.getQuantidade()); // Aqui soma a
 																										// quantidade
-			estoqueRepository.save(produtoExistente);
+			produtoRepository.save(produtoExistente);
 			return "Produto já existente, quantidade atualizada com sucesso!";
 		} else {
 
-			estoqueRepository.save(estoque);
-			return "Produto adicionado ao estoque com sucesso!";
+			produtoRepository.save(produto);
+			return "Produto adicionado ao produto com sucesso!";
 		}
 	}
 
-	public String update(Produtos estoque, long id) {
-		if (!estoqueRepository.existsById(id)) {
-			return "Produto não encontrado no estoque!";
+	public String update(Produtos produto, long id) {
+		if (!produtoRepository.existsById(id)) {
+			return "Produto não encontrado no produto!";
 		}
 
-		estoque.setId(id);
-		estoqueRepository.save(estoque);
+		produto.setId(id);
+		produtoRepository.save(produto);
 		return "Produto atualizado com sucesso!";
 	}
 
 	public String delete(long id) {
-		if (!estoqueRepository.existsById(id)) {
+		if (!produtoRepository.existsById(id)) {
 			return "Produto não encontrado para exclusão!";
 		}
 
-		estoqueRepository.deleteById(id);
+		produtoRepository.deleteById(id);
 		return "Produto deletado com sucesso!";
 	}
 
 	public List<Produtos> findAll() {
-		return estoqueRepository.findAll();
+		return produtoRepository.findAll();
 	}
 
 	public List<Produtos> findByNome(String nome) {
-		return estoqueRepository.findByNomeStartingWith(nome);
+		return produtoRepository.findByNomeStartingWith(nome);
+	}
+
+	public List<Produtos> findByCategoria(String categoria) {
+		return produtoRepository.findByCategoria(categoria);
 	}
 }
