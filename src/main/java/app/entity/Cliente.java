@@ -2,8 +2,7 @@ package app.entity;
 
 import java.util.List;
 
-import org.hibernate.validator.constraints.br.CPF;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;

@@ -1,6 +1,6 @@
 package app.service;
-
 import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +47,7 @@ public class AgendamentoService {
 		return agendamentoRepository.findById(id);
 	}
 	
-	public List<Agendamento> findByDataBetween(LocalDateTime startDate, LocalDateTime endDate){
+	public List<Agendamento> findByDataHoraBetween(LocalDateTime startDate, LocalDateTime endDate){
 		return agendamentoRepository.findByDataHoraBetween(startDate, endDate);
 	}
 	

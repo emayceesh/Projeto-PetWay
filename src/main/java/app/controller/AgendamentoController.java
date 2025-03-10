@@ -1,6 +1,7 @@
 package app.controller;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,11 +82,16 @@ public class AgendamentoController {
 	}
 
 	@GetMapping("/buscarEntreDatas")
-	public ResponseEntity<List<Agendamento>> buscarAgendamentosEntreDatas(@RequestParam LocalDateTime startDate,
-			@RequestParam LocalDateTime endDate) {
+	public ResponseEntity<List<Agendamento>> buscarAgendamentosEntreDatas(@RequestParam String startDate,
+			@RequestParam String endDate) {
 
 		try {
-			List<Agendamento> agendamentos = agendamentoService.findByDataBetween(startDate, endDate);
+			
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+		    LocalDateTime start = LocalDateTime.parse(startDate, formatter);
+		    LocalDateTime end = LocalDateTime.parse(endDate, formatter);
+			
+			List<Agendamento> agendamentos = agendamentoService.findByDataHoraBetween(start, end);
 			if (agendamentos.isEmpty()) {
 				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 			}

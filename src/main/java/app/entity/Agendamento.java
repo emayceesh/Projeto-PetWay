@@ -3,7 +3,9 @@ package app.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,9 +35,9 @@ public class Agendamento {
     private Long id;
 
     @NotNull(message = "Data e hora não podem estar vazias!")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataHora;
     
-    @NotNull
     @NotBlank(message = "Hora não pode estar vazia.")
     private String hora;
     
@@ -48,6 +50,7 @@ public class Agendamento {
 
     @ManyToOne
     @JoinColumn(name = "fk_cliente_id")
+    @JsonIgnoreProperties({"agendamentos", "animais"})
     private Cliente cliente;
     
     @ManyToMany
@@ -56,7 +59,7 @@ public class Agendamento {
         joinColumns = @JoinColumn(name = "agendamento_id"),
         inverseJoinColumns = @JoinColumn(name = "animal_id")
     )
-    @JsonIgnoreProperties("agendamentos")
+    @JsonIgnoreProperties({"agendamentos"})
     private List<Animais> animais;
 
     
