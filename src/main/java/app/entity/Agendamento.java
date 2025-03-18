@@ -59,7 +59,7 @@ public class Agendamento {
         joinColumns = @JoinColumn(name = "agendamento_id"),
         inverseJoinColumns = @JoinColumn(name = "animal_id")
     )
-    @JsonIgnoreProperties({"agendamentos"})
+    @JsonIgnoreProperties({"agendamentos", "cliente"})
     private List<Animais> animais;
 
     

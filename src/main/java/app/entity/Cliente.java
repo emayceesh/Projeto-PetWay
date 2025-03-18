@@ -58,7 +58,7 @@ public class Cliente {
 	
 	@OneToMany(mappedBy = "cliente")
 	@JsonIgnoreProperties("cliente")
-	private List<Agendamento> agendamento;
+	private List<Agendamento> agendamentos;
 	
 	
 	
