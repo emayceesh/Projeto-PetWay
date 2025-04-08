@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.entity.Agendamento;
 import app.entity.Cliente;
 import app.entity.Produtos;
 import app.repository.ProdutosRepository;
@@ -16,23 +17,8 @@ public class ProdutosService {
 	private ProdutosRepository produtoRepository;
 
 	public String save(Produtos produto) {
-		if (produto.getId() == null) {
-			return "ID do produto não pode ser nulo!";
-		}
-
-		Produtos produtoExistente = produtoRepository.findById(produto.getId()).orElse(null);
-
-		if (produtoExistente != null) {
-
-			produtoExistente.setQuantidade(produtoExistente.getQuantidade() + produto.getQuantidade()); // Aqui soma a
-																										// quantidade
-			produtoRepository.save(produtoExistente);
-			return "Produto já existente, quantidade atualizada com sucesso!";
-		} else {
-
-			produtoRepository.save(produto);
-			return "Produto adicionado ao produto com sucesso!";
-		}
+		produtoRepository.save(produto);
+		return "Produto salvo com sucesso!";
 	}
 
 	public String update(Produtos produto, long id) {
