@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.entity.Cliente;
 import app.entity.Produtos;
 import app.repository.ProdutosRepository;
 
@@ -51,6 +52,13 @@ public class ProdutosService {
 
 		produtoRepository.deleteById(id);
 		return "Produto deletado com sucesso!";
+	}
+	
+	public Produtos findById(long id) {
+
+		Produtos produto = this.produtoRepository.findById(id).get();
+
+		return produto;
 	}
 
 	public List<Produtos> findAll() {

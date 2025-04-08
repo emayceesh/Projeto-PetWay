@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.entity.Animais;
+import app.entity.Cliente;
 import app.service.AnimaisService;
 import jakarta.validation.Valid;
 
@@ -59,6 +60,17 @@ public class AnimaisController {
             return new ResponseEntity<>("Erro ao deletar animal: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    
+    @GetMapping("/findById/{id}")
+	public ResponseEntity<Animais> findById(@PathVariable long id){
+		try {
+			Animais animais = this.animaisService.findById(id);
+			return new ResponseEntity<>(animais, HttpStatus.OK );
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST );
+
+		}
+	}
 
     @GetMapping("/findByNome")
     public ResponseEntity<List<Animais>> findByNomeAnimal(@RequestParam String nome) {

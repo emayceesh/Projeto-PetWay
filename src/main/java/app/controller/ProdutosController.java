@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.entity.Animais;
 import app.entity.Produtos;
 import app.service.ProdutosService;
 import jakarta.validation.Valid;
@@ -58,6 +59,17 @@ public class ProdutosController {
 		}
 	}
 
+	@GetMapping("/findById/{id}")
+	public ResponseEntity<Produtos> findById(@PathVariable long id){
+		try {
+			Produtos produto = this.estoqueService.findById(id);
+			return new ResponseEntity<>(produto, HttpStatus.OK );
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST );
+
+		}
+	}
+	
 	@GetMapping("/findAll")
 	public ResponseEntity<List<Produtos>> findAll() {
 		try {
