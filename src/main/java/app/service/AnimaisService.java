@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.entity.Animais;
+import app.entity.Cliente;
 import app.repository.AnimaisRepository;
 
 @Service
@@ -39,6 +40,13 @@ public class AnimaisService {
         this.animaisRepository.deleteById(id); 
         return "Animal deletado com sucesso!";
     }
+    
+    public Animais findById(long id) {
+
+		Animais animais = this.animaisRepository.findById(id).get();
+
+		return animais;
+	}
 
     public List<Animais> findByNomeAnimalIgnoreCaseStartingWith(String nome) {
         return this.animaisRepository.findByNomeAnimalIgnoreCaseStartingWith(nome);  
