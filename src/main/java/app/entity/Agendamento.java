@@ -38,7 +38,7 @@ public class Agendamento {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataHora;
     
-    @NotBlank(message = "Hora não pode estar vazia.")
+
     private String hora;
     
     private String status;//agendado, cancelado, concluido

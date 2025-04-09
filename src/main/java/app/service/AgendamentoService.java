@@ -1,6 +1,6 @@
 package app.service;
 import java.time.LocalDateTime;
-
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +17,12 @@ public class AgendamentoService {
 	private AgendamentoRepository agendamentoRepository;
 
 	public String save(Agendamento agendamento) {
+		if (agendamento.getDataHora() != null) {
+			// Formatar a hora no formato HH:mm
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+			String horaFormatada = agendamento.getDataHora().toLocalTime().format(formatter);
+			agendamento.setHora(horaFormatada); // se for String
+		}
 		agendamentoRepository.save(agendamento);
 		return "Agendamento salvo com sucesso!";
 	}

@@ -36,7 +36,8 @@ public class AgendamentoController {
 			String mensagem = agendamentoService.save(agendamento);
 			return new ResponseEntity<>(mensagem, HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Erro ao salvar agendamento: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+			e.printStackTrace(); // pra log
+			return new ResponseEntity<>("Erro ao salvar agendamento: " + e.toString(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -66,6 +67,7 @@ public class AgendamentoController {
 			List<Agendamento> lista = agendamentoService.findAll();
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 		} catch (Exception e) {
+
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
