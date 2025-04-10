@@ -8,4 +8,8 @@ public interface ProdutosRepository extends JpaRepository<Produtos, Long> {
     public List<Produtos> findByNomeIgnoreCaseStartingWith(String nome);
     
     public List<Produtos> findByCategoriaIgnoreCaseStartingWith(String categoria);
+    
+    //basicamente busca pelo nome e pela categoria juntos
+    public List<Produtos> findByNomeContainingIgnoreCaseAndCategoriaContainingIgnoreCase(String nome, String categoria);
+
 }

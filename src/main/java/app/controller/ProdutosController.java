@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.entity.Animais;
 import app.entity.Produtos;
 import app.service.ProdutosService;
 import jakarta.validation.Valid;
@@ -70,4 +69,11 @@ public class ProdutosController {
 			List<Produtos> lista = this.estoqueService.findByCategoriaIgnoreCaseStartingWith(categoria);
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 	}
+	
+	@GetMapping("/findByNomeAndCategoria")
+	public ResponseEntity<List<Produtos>> findByNomeAndCategoria(@RequestParam String nome, @RequestParam String categoria) {
+	    List<Produtos> lista = this.estoqueService.findByNomeAndCategoria(nome, categoria);
+	    return new ResponseEntity<>(lista, HttpStatus.OK);
+	}
+
 }

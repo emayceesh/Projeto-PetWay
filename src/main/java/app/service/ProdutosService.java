@@ -58,4 +58,9 @@ public class ProdutosService {
 	public List<Produtos> findByCategoriaIgnoreCaseStartingWith(String categoria) {
 		return produtoRepository.findByCategoriaIgnoreCaseStartingWith(categoria);
 	}
+	
+	public List<Produtos> findByNomeAndCategoria(String nome, String categoria) {
+	    return this.produtoRepository.findByNomeContainingIgnoreCaseAndCategoriaContainingIgnoreCase(nome, categoria);
+	}
+
 }
