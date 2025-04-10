@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import app.entity.Produtos;
 
 public interface ProdutosRepository extends JpaRepository<Produtos, Long> {
-    public List<Produtos> findByNomeStartingWith(String nome);
+    public List<Produtos> findByNomeIgnoreCaseStartingWith(String nome);
     
-    public List<Produtos> findByCategoria(String categoria);
+    public List<Produtos> findByCategoriaIgnoreCaseStartingWith(String categoria);
 }

@@ -61,13 +61,13 @@ public class ProdutosController {
 
 	@GetMapping("/findByNome")
 	public ResponseEntity<List<Produtos>> findByNome(@RequestParam String nome) {
-			List<Produtos> lista = this.estoqueService.findByNome(nome);
+			List<Produtos> lista = this.estoqueService.findByNomeIgnoreCaseStartingWith(nome);
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 	}
 
 	@GetMapping("/findByCategoria")
 	public ResponseEntity<List<Produtos>> findByCategoria(@RequestParam String categoria) {
-			List<Produtos> lista = this.estoqueService.findByCategoria(categoria);
+			List<Produtos> lista = this.estoqueService.findByCategoriaIgnoreCaseStartingWith(categoria);
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 	}
 }
