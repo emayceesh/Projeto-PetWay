@@ -79,8 +79,4 @@ public class ClienteService {
 		return this.clienteRepository.findByNomeClienteIgnoreCaseStartingWith(nome);
 	}
 
-	public List<Cliente> findByCelular(String celular) {
-		return this.clienteRepository.findByCelularContaining(celular);
-	}
-
 }

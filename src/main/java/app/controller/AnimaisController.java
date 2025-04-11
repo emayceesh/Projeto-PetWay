@@ -62,14 +62,24 @@ public class AnimaisController {
 	}
     
     @GetMapping("/findByNome")
-    public ResponseEntity<List<Animais>> findByNomeAnimal(@RequestParam String nome) {
-            List<Animais> lista = this.animaisService.findByNomeAnimalIgnoreCaseStartingWith(nome);
+    public ResponseEntity<List<Animais>> findByNomeAnimal(@RequestParam String nomeAnimal) {
+            List<Animais> lista = this.animaisService.findByNomeAnimalIgnoreCaseStartingWith(nomeAnimal);
             return new ResponseEntity<>(lista, HttpStatus.OK);
     }
     
-    @GetMapping("/buscarPorRaca")
+    @GetMapping("/findByRaca")
     public ResponseEntity<List<Animais>> findByRacaIgnoreCaseContaining(@RequestParam String raca){
 			List<Animais> lista = this.animaisService.findByRacaIgnoreCaseContaining(raca);
 			return new ResponseEntity<>(lista, HttpStatus.OK);
     }
+    
+    @GetMapping("/findByNomeAnimalAndRaca")
+    public ResponseEntity<List<Animais>> findByNomeAnimalAndRaca(
+            @RequestParam String nomeAnimal,
+            @RequestParam String raca) {
+
+        List<Animais> lista = animaisService.findByNomeAnimalAndRacaIgnoreCase(nomeAnimal, raca);
+        return new ResponseEntity<>(lista, HttpStatus.OK);
+    }
+
 }

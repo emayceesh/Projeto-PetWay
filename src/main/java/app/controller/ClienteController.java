@@ -71,10 +71,5 @@ public class ClienteController {
 			return new ResponseEntity<>(lista, HttpStatus.OK);
 	}
 	
-	@GetMapping("/findByCelular")
-	public ResponseEntity<List<Cliente>> findByCelularContaining(@RequestParam String celular) {
-			List<Cliente> lista = this.clienteService.findByCelular(celular); 
-			return new ResponseEntity<>(lista, HttpStatus.OK);
-	}
 	
 }
