@@ -34,7 +34,7 @@ public class ClienteService {
 	
 	//Verifica se já existe o cpf que está sendo cadastrado OU alterado 
 	public void verificarCpfCliente(String cpf) {
-		List<Cliente> clienteComCpf = clienteRepository.findByCpf(cpf);
+		List<Cliente> clienteComCpf = clienteRepository.findByCpfStartingWithContaining(cpf);
 		if (!clienteComCpf.isEmpty()) {
 			throw new RuntimeException("CPF já cadastrado!");
 		}
@@ -71,7 +71,7 @@ public class ClienteService {
 	}
 
 	public List<Cliente> findByCpf(String cpf) {
-		return this.clienteRepository.findByCpf(cpf);
+		return this.clienteRepository.findByCpfStartingWithContaining(cpf);
 	}
 
 	public List<Cliente> findByNomeClienteIgnoreCaseStartingWith(String nome) {
