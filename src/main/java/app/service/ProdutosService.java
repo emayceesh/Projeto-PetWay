@@ -51,11 +51,16 @@ public class ProdutosService {
 		return produtoRepository.findAll();
 	}
 
-	public List<Produtos> findByNome(String nome) {
-		return produtoRepository.findByNomeStartingWith(nome);
+	public List<Produtos> findByNomeIgnoreCaseStartingWith(String nome) {
+		return produtoRepository.findByNomeIgnoreCaseStartingWith(nome);
 	}
 
-	public List<Produtos> findByCategoria(String categoria) {
-		return produtoRepository.findByCategoria(categoria);
+	public List<Produtos> findByCategoriaIgnoreCaseStartingWith(String categoria) {
+		return produtoRepository.findByCategoriaIgnoreCaseStartingWith(categoria);
 	}
+	
+	public List<Produtos> findByNomeAndCategoria(String nome, String categoria) {
+	    return this.produtoRepository.findByNomeContainingIgnoreCaseAndCategoriaContainingIgnoreCase(nome, categoria);
+	}
+
 }

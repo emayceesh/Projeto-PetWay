@@ -48,13 +48,18 @@ public class AnimaisService {
 		return animais;
 	}
 
-    public List<Animais> findByNomeAnimalIgnoreCaseStartingWith(String nome) {
-        return this.animaisRepository.findByNomeAnimalIgnoreCaseStartingWith(nome);  
+    public List<Animais> findByNomeAnimalIgnoreCaseStartingWith(String nomeAnimal) {
+        return this.animaisRepository.findByNomeAnimalIgnoreCaseStartingWith(nomeAnimal);  
     }
     
     public List<Animais> findByRacaIgnoreCaseContaining(String raca){
     	return this.animaisRepository.findByRacaIgnoreCaseContaining(raca);
     }
+    
+    public List<Animais> findByNomeAnimalAndRacaIgnoreCase(String nomeAnimal, String raca) {
+        return animaisRepository.findByNomeAnimalStartingWithIgnoreCaseAndRacaIgnoreCase(nomeAnimal, raca);
+    }
+
 
 	public List<Animais>  findAll() {
 
