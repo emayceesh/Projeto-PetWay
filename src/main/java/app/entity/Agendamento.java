@@ -40,6 +40,7 @@ public class Agendamento {
     
 
     private String hora;
+
     
     private String status;//agendado, cancelado, concluido
     

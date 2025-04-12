@@ -1,4 +1,4 @@
-package app.service;
+ package app.service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -27,15 +27,30 @@ public class AgendamentoService {
 		return "Agendamento salvo com sucesso!";
 	}
 
+
+
 	public String update(Agendamento agendamento, long id) {
-		if (!agendamentoRepository.existsById(id)) {
-			return "Agendamento não encontrado para atualização.";
+		// Se hora vier nulo, extrai de dataHora e converte para String
+		if ((agendamento.getHora() == null || agendamento.getHora().isEmpty()) && agendamento.getDataHora() != null) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+			String horaConvertida = agendamento.getDataHora().toLocalTime().format(formatter);
+			agendamento.setHora(horaConvertida);
 		}
 
-		agendamento.setId(id);
-		agendamentoRepository.save(agendamento);
-		return "Agendamento atualizado com sucesso!";
+		return agendamentoRepository.findById(id).map(existing -> {
+			existing.setDataHora(agendamento.getDataHora());
+			existing.setHora(agendamento.getHora());
+			existing.setStatus(agendamento.getStatus());
+			existing.setCliente(agendamento.getCliente());
+			// outros campos que quiser atualizar...
+			agendamentoRepository.save(existing);
+			return "Agendamento atualizado com sucesso!";
+		}).orElseThrow(() -> new RuntimeException("Agendamento não encontrado com id: " + id));
 	}
+	public List<Agendamento> buscarPorNomeCliente(String nomeCliente) {
+		return agendamentoRepository.findByCliente_NomeClienteContainingIgnoreCase(nomeCliente);
+	}
+
 
 	public String delete(long id) {
 		if (!agendamentoRepository.existsById(id)) {
@@ -52,20 +67,30 @@ public class AgendamentoService {
 	public Optional<Agendamento> findById(long id) {
 		return agendamentoRepository.findById(id);
 	}
-	
+
 	public List<Agendamento> findByDataHoraBetween(LocalDateTime startDate, LocalDateTime endDate){
 		return agendamentoRepository.findByDataHoraBetween(startDate, endDate);
 	}
-	
+
 	public List<Agendamento> findByStatus(String status){
 		return agendamentoRepository.findByStatus(status);
 	}
-	
+
 	public List<Agendamento> buscarPorCliente(Long clienteId) {
         return agendamentoRepository.findByClienteId(clienteId);
     }
-	
+
 	public List<Agendamento> buscarPorNomeServico(String nomeServico){
 		return agendamentoRepository.buscarAgendamentoPorNomeServico(nomeServico);
 	}
+
+	public Agendamento saveRetornando(Agendamento agendamento) {
+		if (agendamento.getDataHora() != null) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+			String horaFormatada = agendamento.getDataHora().toLocalTime().format(formatter);
+			agendamento.setHora(horaFormatada);
+		}
+		return agendamentoRepository.save(agendamento);
+	}
+
 }

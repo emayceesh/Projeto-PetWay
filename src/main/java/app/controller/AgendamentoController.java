@@ -31,15 +31,18 @@ public class AgendamentoController {
 	private AgendamentoService agendamentoService;
 
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@RequestBody @Valid Agendamento agendamento) {
+	public ResponseEntity<Agendamento> save(@RequestBody @Valid Agendamento agendamento) {
 		try {
-			String mensagem = agendamentoService.save(agendamento);
-			return new ResponseEntity<>(mensagem, HttpStatus.CREATED);
+			Agendamento agendamentoSalvo = agendamentoService.saveRetornando(agendamento);
+			return new ResponseEntity<>(agendamentoSalvo, HttpStatus.CREATED);
 		} catch (Exception e) {
-			e.printStackTrace(); // pra log
-			return new ResponseEntity<>("Erro ao salvar agendamento: " + e.toString(), HttpStatus.BAD_REQUEST);
+			e.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
+
+
+
 
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String> update(@RequestBody Agendamento agendamento, @PathVariable long id) {
@@ -50,6 +53,19 @@ public class AgendamentoController {
 			return new ResponseEntity<>("Erro ao atualizar agendamento: " + e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
+	@GetMapping("/buscarPorNomeCliente")
+	public ResponseEntity<List<Agendamento>> buscarPorNomeCliente(@RequestParam String nomeCliente) {
+		try {
+			List<Agendamento> agendamentos = agendamentoService.buscarPorNomeCliente(nomeCliente);
+			if (agendamentos.isEmpty()) {
+				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<>(agendamentos, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> delete(@PathVariable long id) {
