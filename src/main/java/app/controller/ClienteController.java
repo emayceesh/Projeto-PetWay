@@ -60,7 +60,7 @@ public class ClienteController {
 	}
 	
 	@GetMapping("/findByCpf")
-	public ResponseEntity<List<Cliente>> findByCpfStartingWithContaining(@RequestParam String cpf) {
+	public ResponseEntity<List<Cliente>> findByCpfStartingWith(@RequestParam String cpf) {
 			List<Cliente> listaCPF = this.clienteService.findByCpf(cpf);
 			return new ResponseEntity<>(listaCPF, HttpStatus.OK);
 	}
