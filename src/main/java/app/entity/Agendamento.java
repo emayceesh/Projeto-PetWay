@@ -37,15 +37,15 @@ public class Agendamento {
     @NotNull(message = "Data e hora não podem estar vazias!")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataHora;
-    
+
 
     private String hora;
 
-    
-    private String status;//agendado, cancelado, concluido
-    
+
+
+
     private Boolean buscarEntregar = false;//começa em false já, caso seja true, tera busca e entrega do pet
-    
+
     @Size(max = 100, message = "Observação deve ter no máximo 100 caracteres.")
     private String observacoes;
 
@@ -53,29 +53,29 @@ public class Agendamento {
     @JoinColumn(name = "fk_cliente_id")
     @JsonIgnoreProperties({"agendamentos", "animais"})
     private Cliente cliente;
-    
+
     @ManyToMany
     @JoinTable(
-        name = "agendamento_animal",
-        joinColumns = @JoinColumn(name = "agendamento_id"),
-        inverseJoinColumns = @JoinColumn(name = "animal_id")
+            name = "agendamento_animal",
+            joinColumns = @JoinColumn(name = "agendamento_id"),
+            inverseJoinColumns = @JoinColumn(name = "animal_id")
     )
     @JsonIgnoreProperties({"agendamentos", "cliente"})
     private List<Animais> animais;
 
-    
-    @ManyToMany
-	@JoinTable(
-	    name = "agendamento_servico",
-	    joinColumns = @JoinColumn(name = "agendamento_id"),
-	    inverseJoinColumns = @JoinColumn(name = "servico_id")
-	)
-	@JsonIgnoreProperties("agendamentos")
-	private List<Servicos> servicos;
 
-	public void setId(long id) {
-		this.id = id;
-		
-	}
+    @ManyToMany
+    @JoinTable(
+            name = "agendamento_servico",
+            joinColumns = @JoinColumn(name = "agendamento_id"),
+            inverseJoinColumns = @JoinColumn(name = "servico_id")
+    )
+    @JsonIgnoreProperties("agendamentos")
+    private List<Servicos> servicos;
+
+    public void setId(long id) {
+        this.id = id;
+
+    }
 
 }

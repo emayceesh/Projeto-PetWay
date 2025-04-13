@@ -1,4 +1,4 @@
- package app.service;
+package app.service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -40,7 +40,7 @@ public class AgendamentoService {
 		return agendamentoRepository.findById(id).map(existing -> {
 			existing.setDataHora(agendamento.getDataHora());
 			existing.setHora(agendamento.getHora());
-			existing.setStatus(agendamento.getStatus());
+
 			existing.setCliente(agendamento.getCliente());
 			// outros campos que quiser atualizar...
 			agendamentoRepository.save(existing);
@@ -72,13 +72,11 @@ public class AgendamentoService {
 		return agendamentoRepository.findByDataHoraBetween(startDate, endDate);
 	}
 
-	public List<Agendamento> findByStatus(String status){
-		return agendamentoRepository.findByStatus(status);
-	}
+
 
 	public List<Agendamento> buscarPorCliente(Long clienteId) {
-        return agendamentoRepository.findByClienteId(clienteId);
-    }
+		return agendamentoRepository.findByClienteId(clienteId);
+	}
 
 	public List<Agendamento> buscarPorNomeServico(String nomeServico){
 		return agendamentoRepository.buscarAgendamentoPorNomeServico(nomeServico);
