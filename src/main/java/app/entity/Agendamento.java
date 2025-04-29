@@ -41,9 +41,6 @@ public class Agendamento {
 
     private String hora;
 
-
-
-
     private Boolean buscarEntregar = false;//começa em false já, caso seja true, tera busca e entrega do pet
 
     @Size(max = 100, message = "Observação deve ter no máximo 100 caracteres.")

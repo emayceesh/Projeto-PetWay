@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<Map<String, String>> handle01(MethodArgumentNotValidException ex) {
 		Map<String, String> erros = new HashMap<>();
 		for (FieldError fildError : ex.getBindingResult().getFieldErrors()) {
-			erros.put(fildError.getField(), fildError.getDefaultMessage());
+			erros.put("Erro", fildError.getDefaultMessage());
 		}
 		return new ResponseEntity<Map<String, String>>(erros, HttpStatus.BAD_REQUEST);
 	}
@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<Map<String, String>> handle02(ConstraintViolationException ex) {
 		Map<String, String> erros = new HashMap<>();
 		for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
-			erros.put(violation.getPropertyPath().toString(), violation.getMessage());
+			erros.put("Erro", violation.getMessage());
 		}
 		return new ResponseEntity<Map<String, String>>(erros, HttpStatus.BAD_REQUEST);
 	}
