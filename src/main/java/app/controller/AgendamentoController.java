@@ -3,10 +3,12 @@ package app.controller;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,13 +33,13 @@ public class AgendamentoController {
 	private AgendamentoService agendamentoService;
 
 	@PostMapping("/save")
-	public ResponseEntity<Agendamento> save(@RequestBody @Valid Agendamento agendamento) {
+	public ResponseEntity<Agendamento> save(@RequestBody @Valid Agendamento agendamento, BindingResult bindingResult) {
 		Agendamento agendamentoSalvo = agendamentoService.saveRetornando(agendamento);
 		return new ResponseEntity<>(agendamentoSalvo, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> update(@RequestBody Agendamento agendamento, @PathVariable long id) {
+	public ResponseEntity<String> update(@RequestBody @Valid Agendamento agendamento, @PathVariable long id) {
 		String mensagem = agendamentoService.update(agendamento, id);
 		return new ResponseEntity<>(mensagem, HttpStatus.OK);
 	}
@@ -65,9 +67,9 @@ public class AgendamentoController {
 
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<Agendamento> findById(@PathVariable long id) {
-		Agendamento agendamento = agendamentoService.findById(id)
-				.orElseThrow(() -> new RuntimeException("Agendamento não encontrado"));
-		return new ResponseEntity<>(agendamento, HttpStatus.OK);
+	    Optional<Agendamento> agendamento = agendamentoService.findById(id);
+	    return agendamento.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+	                      .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
 	@GetMapping("/buscarEntreDatas")
