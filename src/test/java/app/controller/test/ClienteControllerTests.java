@@ -1,9 +1,20 @@
 package app.controller.test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -137,6 +148,63 @@ class ClienteControllerTest {
         assertEquals(1, response.getBody().size());
         assertEquals("João Silva", response.getBody().get(0).getNomeCliente());
     }
+    
+    @Test
+    @DisplayName("INTEGRAÇÃO - Deve retornar lista vazia quando não houver clientes")
+    void testFindAllClientesVazia() {
+        when(clienteService.findAll()).thenReturn(Collections.emptyList());
+        
+        ResponseEntity<List<Cliente>> response = clienteController.findAll();
+        
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.getBody().isEmpty());
+    }
+
+    @Test
+    @DisplayName("INTEGRAÇÃO - Deve retornar NOT_FOUND para cliente inexistente")
+    void testFindByIdInexistente() {
+        
+        Long idInexistente = 99L;
+        when(clienteService.findById(idInexistente)).thenReturn(null);
+
+        ResponseEntity<Cliente> response = clienteController.findById(idInexistente);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode()); // Agora passa!
+        assertNull(response.getBody());
+        verify(clienteService, times(1)).findById(idInexistente);
+    }
+
+    @Test
+    @DisplayName("INTEGRAÇÃO - Deve retornar lista vazia ao buscar por nome inexistente")
+    void testFindByNomeInexistente() {
+        when(clienteService.findByNomeClienteIgnoreCaseStartingWith("Inexistente"))
+            .thenReturn(Collections.emptyList());
+        
+        ResponseEntity<List<Cliente>> response = clienteController
+            .findByNomeClienteIgnoreCaseStartingWith("Inexistente");
+        
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.getBody().isEmpty());
+    }
+
+    @Test
+    @DisplayName("INTEGRAÇÃO - Deve validar campos obrigatórios ao salvar cliente")
+    void testSaveClienteCamposObrigatorios() {
+        Cliente clienteInvalido = new Cliente(); // Sem nome, CPF, etc
+        
+        BindingResult bindingResult = mock(BindingResult.class);
+        when(bindingResult.hasErrors()).thenReturn(true);
+        when(bindingResult.getFieldErrors()).thenReturn(List.of(
+            new FieldError("cliente", "nomeCliente", "Nome é obrigatório"),
+            new FieldError("cliente", "cpf", "CPF é obrigatório")
+        ));
+        
+        ResponseEntity<String> response = clienteController.save(clienteInvalido, bindingResult);
+        
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertTrue(response.getBody().contains("Nome é obrigatório"));
+        assertTrue(response.getBody().contains("CPF é obrigatório"));
+    }
 
     // Teste Unitário
     @Test
@@ -148,5 +216,34 @@ class ClienteControllerTest {
 
         assertEquals("Cliente salvo com sucesso", resultado);
         verify(clienteService, times(1)).save(cliente);
+    }
+
+    @Test
+    @DisplayName("UNITÁRIO - Deve lançar exceção ao buscar cliente inexistente")
+    void testFindByIdInexistenteService() {
+        when(clienteService.findById(99L)).thenThrow(new RuntimeException("Cliente não encontrado"));
+        
+        assertThrows(RuntimeException.class, () -> clienteService.findById(99L));
+        verify(clienteService, times(1)).findById(99L);
+    }
+    
+    @Test
+    @DisplayName("UNITÁRIO - Deve retornar BAD_REQUEST para campos obrigatórios faltantes")
+    void testSaveClienteCamposObrigatoriosFaltantes() {
+
+        Cliente clienteInvalido = new Cliente(); 
+        BindingResult bindingResult = mock(BindingResult.class);
+        when(bindingResult.hasErrors()).thenReturn(true);
+        when(bindingResult.getFieldErrors()).thenReturn(List.of(
+            new FieldError("cliente", "nomeCliente", "Nome é obrigatório"),
+            new FieldError("cliente", "cpf", "CPF é obrigatório")
+        ));
+
+        ResponseEntity<String> response = clienteController.save(clienteInvalido, bindingResult);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertTrue(response.getBody().contains("Nome é obrigatório"));
+        assertTrue(response.getBody().contains("CPF é obrigatório"));
+        verify(clienteService, never()).save(any());
     }
 }
