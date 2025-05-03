@@ -1,11 +1,14 @@
 package app.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,19 +27,30 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/cliente")
 @CrossOrigin("*")
+@Validated
 public class ClienteController {
 
 	@Autowired
 	private ClienteService clienteService;
 
 	@PostMapping("/save")
-	public ResponseEntity<String> save(@RequestBody @Valid Cliente cliente, BindingResult result) {
-			String  mensagem = this.clienteService.save(cliente);
-			return new ResponseEntity<>(mensagem, HttpStatus.OK);
+	public ResponseEntity<String> save(@Valid @RequestBody Cliente cliente, BindingResult result) {
+	    if (result.hasErrors()) {
+	        
+	        String errorMessage = result.getFieldErrors().stream()
+	            .map(FieldError::getDefaultMessage)
+	            .collect(Collectors.joining("\n"));
+	        
+	        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+	    }
+	    
+	    String mensagem = this.clienteService.save(cliente);
+	    return new ResponseEntity<>(mensagem, HttpStatus.OK);
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> update(@RequestBody Cliente cliente, @PathVariable long id) {
+	public ResponseEntity<String> update(
+ @RequestBody Cliente cliente, @PathVariable long id) {
 			String mensagem = this.clienteService.update(cliente, id);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
 	}
