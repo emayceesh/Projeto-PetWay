@@ -1,5 +1,6 @@
 package app.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,20 @@ public class ServicosService {
 	private ServicosRepository servicosRepository;
 
 	public String save(Servicos servicos) {
-		
-		this.servicosRepository.save(servicos);
-		return " Serviço cadastrado com sucesso!";
+	    
+	    if (servicos == null) {
+	        throw new NullPointerException("Serviço não pode ser nulo");
+	    }
+	    
+	    if (servicos.getNomeServico() == null || servicos.getNomeServico().trim().isEmpty()) {
+	        throw new IllegalArgumentException("Nome do serviço é obrigatório");
+	    }
+	    if (servicos.getPreco() == null || servicos.getPreco().compareTo(BigDecimal.ZERO) <= 0) {
+	        throw new IllegalArgumentException("Valor deve ser positivo");
+	    }
+	    
+	    this.servicosRepository.save(servicos);
+	    return "Serviço cadastrado com sucesso!";
 	}
 
 	public String update(Servicos servicos, long id) {

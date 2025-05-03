@@ -68,9 +68,12 @@ public class ClienteController {
 	}
 	
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<Cliente> findById(@PathVariable long id){
-			Cliente cliente = this.clienteService.findById(id);
-			return new ResponseEntity<>(cliente, HttpStatus.OK );
+	public ResponseEntity<Cliente> findById(@PathVariable long id) {
+	    Cliente cliente = this.clienteService.findById(id);
+	    if (cliente == null) {
+	        return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404
+	    }
+	    return new ResponseEntity<>(cliente, HttpStatus.OK); // 200
 	}
 	
 	@GetMapping("/findByCpf")

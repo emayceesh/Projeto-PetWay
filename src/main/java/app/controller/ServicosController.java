@@ -1,11 +1,13 @@
 package app.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +33,17 @@ public class ServicosController {
 
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@RequestBody @Valid Servicos servicos, BindingResult result) {
-			String mensagem = this.servicosService.save(servicos);
-			return new ResponseEntity<>(mensagem, HttpStatus.OK);
+	    if (result.hasErrors()) {
+
+	        String errorMessage = result.getFieldErrors().stream()
+	            .map(FieldError::getDefaultMessage)
+	            .collect(Collectors.joining(", "));
+	        
+	        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+	    }
+	    
+	    String mensagem = this.servicosService.save(servicos);
+	    return new ResponseEntity<>(mensagem, HttpStatus.OK);
 	}
 
 	@PutMapping("/update/{id}")
@@ -54,9 +65,12 @@ public class ServicosController {
 	}
 	
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<Servicos> findById(@PathVariable long id){
-			Servicos servicos = this.servicosService.findById(id);
-			return new ResponseEntity<>(servicos, HttpStatus.OK );
+	public ResponseEntity<Servicos> findById(@PathVariable long id) {
+	    Servicos servicos = this.servicosService.findById(id);
+	    if (servicos == null) {
+	        return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
+	    }
+	    return new ResponseEntity<>(servicos, HttpStatus.OK); 
 	}
 	
 	@GetMapping("/findByNome")
