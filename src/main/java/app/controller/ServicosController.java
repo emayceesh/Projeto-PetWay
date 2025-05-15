@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,6 +32,7 @@ public class ServicosController {
 	@Autowired
 	private ServicosService servicosService;
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/save")
 	public ResponseEntity<String> save(@RequestBody @Valid Servicos servicos, BindingResult result) {
 	    if (result.hasErrors()) {
@@ -46,12 +48,14 @@ public class ServicosController {
 	    return new ResponseEntity<>(mensagem, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String> update(@RequestBody Servicos servicos, @PathVariable long id) {
 			String mensagem = this.servicosService.update(servicos, id);
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> delete(@PathVariable long id){
 			String mensagem = this.servicosService.delete(id);

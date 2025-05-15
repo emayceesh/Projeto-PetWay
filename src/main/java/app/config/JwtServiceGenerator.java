@@ -23,7 +23,7 @@ public class JwtServiceGenerator {
 
 	///////////////////////////////////////////////////////
 	//Parâmetros para geração do token
-	public static final String SECRET_KEY = "UMACHAVESECRETADASUAAPIAQUIUMACHAVESECRETADASUAAPIAQUIUMACHAVESECRETADASUAAPIAQUIUMACHAVESECRETADASUAAPIAQUI";
+	public static final String SECRET_KEY = "4nd1fY0uG01W4nn4G0W1thY0u4nd1fY0uD1e1W4nn4D1eW1thY0u";
 	public static final SignatureAlgorithm ALGORITMO_ASSINATURA = SignatureAlgorithm.HS256;
 	public static final int HORAS_EXPIRACAO_TOKEN = 1;
 
@@ -31,9 +31,9 @@ public class JwtServiceGenerator {
 		
 		//dados enviados no payload
 		Map<String, Object> payloadData = new HashMap<>();
-		payloadData.put("username", usuario.getUsername());
 		payloadData.put("id", usuario.getId().toString());
 		payloadData.put("role", usuario.getRole());
+		payloadData.put("username", usuario.getUsername());
 		payloadData.put("nomeCompleto", usuario.getNomeCompleto());
 		payloadData.put("email", usuario.getEmail());
 		
