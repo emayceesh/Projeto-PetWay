@@ -28,13 +28,14 @@ public class JwtServiceGenerator {
 	public static final int HORAS_EXPIRACAO_TOKEN = 1;
 
 	public Map<String, Object> gerarPayload(Usuario usuario){
-		//AQUI VOCÊ PODE COLOCAR O QUE MAIS VAI COMPOR O PAYLOAD DO TOKEN
 		
+		//dados enviados no payload
 		Map<String, Object> payloadData = new HashMap<>();
 		payloadData.put("username", usuario.getUsername());
 		payloadData.put("id", usuario.getId().toString());
 		payloadData.put("role", usuario.getRole());
-		payloadData.put("outracoisa", "teste");
+		payloadData.put("nomeCompleto", usuario.getNomeCompleto());
+		payloadData.put("email", usuario.getEmail());
 		
 		return payloadData;
 	}
