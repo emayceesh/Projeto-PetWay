@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.entity.Agendamento;
+import app.repository.AgendamentoRepository;
 import app.service.AgendamentoService;
 import jakarta.validation.Valid;
 
@@ -31,6 +32,7 @@ public class AgendamentoController {
 
 	@Autowired
 	private AgendamentoService agendamentoService;
+	
 
 	@PostMapping("/save")
 	public ResponseEntity<Agendamento> save(@RequestBody @Valid Agendamento agendamento, BindingResult bindingResult) {

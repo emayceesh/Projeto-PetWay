@@ -19,7 +19,8 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> 
 
 	@Query("SELECT a FROM Agendamento a JOIN a.servicos s WHERE LOWER(s.nomeServico) LIKE LOWER(CONCAT('%', :nomeServico, '%'))")
 	public List<Agendamento> buscarAgendamentoPorNomeServico(@Param(value = "nomeServico") String nomeServico);
-	List<Agendamento> findByCliente_NomeClienteContainingIgnoreCase(String nomeCliente);
-
+	
+	public List<Agendamento> findByCliente_NomeClienteContainingIgnoreCase(String nomeCliente);
+	
 }
 
