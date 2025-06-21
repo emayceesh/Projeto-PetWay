@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import app.entity.Cliente;
 import app.repository.ClienteRepository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
 @Service
 public class ClienteService {
 
@@ -56,11 +59,11 @@ public class ClienteService {
 		return "Cliente excluido com sucesso!";
 	}
 
-	public List<Cliente> findAll() {
+	public Page<Cliente> findAll(int numPage, int numQntdPorPagina) {
 
-		List<Cliente> listaClientes = this.clienteRepository.findAll();
+		PageRequest config = PageRequest.of(numPage-1, numQntdPorPagina);
 
-		return listaClientes;
+		return this.clienteRepository.findAll(config);
 	}
 
 	public Cliente findById(long id) {

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AnimaisService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PetWay</a> &gt; <a href="index.source.html" class="el_package">app.service</a> &gt; <span class="el_source">AnimaisService.java</span></div><h1>AnimaisService.java</h1><pre class="source lang-java linenums">package app.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import app.entity.Animais;
+import app.entity.Cliente;
+import app.repository.AnimaisRepository;
+
+@Service
+<span class="fc" id="L13">public class AnimaisService {</span>
+    
+    @Autowired
+    private AnimaisRepository animaisRepository;
+
+    public String save(Animais animais) {
+<span class="nc" id="L19">        this.animaisRepository.save(animais);  // Save will handle both INSERT and UPDATE depending on the ID</span>
+<span class="nc" id="L20">        return &quot;Animal salvo com sucesso&quot;;</span>
+    }
+
+    public String update(Animais animais, long id) {
+       
+<span class="nc bnc" id="L25" title="All 2 branches missed.">        if (!animaisRepository.existsById(id)) {</span>
+<span class="nc" id="L26">            return &quot;Animal não encontrado para atualização&quot;;</span>
+        }
+
+<span class="nc" id="L29">        animais.setId(id); </span>
+<span class="nc" id="L30">        this.animaisRepository.save(animais);  </span>
+<span class="nc" id="L31">        return &quot;Animal alterado com sucesso&quot;;</span>
+    }
+
+    public String delete(long id) {
+       
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        if (!animaisRepository.existsById(id)) {</span>
+<span class="nc" id="L37">            return &quot;Animal não encontrado para exclusão&quot;;</span>
+        }
+        
+<span class="nc" id="L40">        this.animaisRepository.deleteById(id); </span>
+<span class="nc" id="L41">        return &quot;Animal deletado com sucesso!&quot;;</span>
+    }
+    
+    public Animais findById(long id) {
+
+<span class="nc" id="L46">		Animais animais = this.animaisRepository.findById(id).get();</span>
+
+<span class="nc" id="L48">		return animais;</span>
+	}
+
+    public List&lt;Animais&gt; findByNomeAnimalIgnoreCaseStartingWith(String nomeAnimal) {
+<span class="nc" id="L52">        return this.animaisRepository.findByNomeAnimalIgnoreCaseStartingWith(nomeAnimal);  </span>
+    }
+    
+    public List&lt;Animais&gt; findByRacaIgnoreCaseContaining(String raca){
+<span class="nc" id="L56">    	return this.animaisRepository.findByRacaIgnoreCaseContaining(raca);</span>
+    }
+    
+    public List&lt;Animais&gt; findByNomeAnimalAndRacaIgnoreCase(String nomeAnimal, String raca) {
+<span class="nc" id="L60">        return animaisRepository.findByNomeAnimalStartingWithIgnoreCaseAndRacaIgnoreCase(nomeAnimal, raca);</span>
+    }
+
+
+	public List&lt;Animais&gt;  findAll() {
+
+<span class="nc" id="L66">		List&lt;Animais&gt; listaAnimais = this.animaisRepository.findAll();</span>
+
+<span class="nc" id="L68">		return listaAnimais;</span>
+	 }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

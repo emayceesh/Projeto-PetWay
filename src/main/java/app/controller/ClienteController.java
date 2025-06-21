@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
 
 import app.entity.Cliente;
 import app.service.ClienteService;
@@ -61,10 +62,11 @@ public class ClienteController {
 			return new ResponseEntity<>(mensagem, HttpStatus.OK);
 	}
 	
-	@GetMapping("/findAll")
-	public ResponseEntity <List<Cliente>> findAll(){
-			List<Cliente> listaClientes = this.clienteService.findAll();
-			return new ResponseEntity<>(listaClientes, HttpStatus.OK);
+	@GetMapping("/findAll/{numPage}/{numQntdPorPagina}")
+	public ResponseEntity <Page<Cliente>> findAll(@PathVariable("numPage") int numPage,
+			@PathVariable("numQntdPorPagina") int numQntdPorPagina){
+			Page<Cliente> lista = this.clienteService.findAll(numPage, numQntdPorPagina); 
+			return new ResponseEntity<>(lista, HttpStatus.OK);
 	}
 	
 	@GetMapping("/findById/{id}")

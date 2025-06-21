@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClienteService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PetWay</a> &gt; <a href="index.source.html" class="el_package">app.service</a> &gt; <span class="el_source">ClienteService.java</span></div><h1>ClienteService.java</h1><pre class="source lang-java linenums">package app.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import app.entity.Cliente;
+import app.repository.ClienteRepository;
+
+@Service
+<span class="fc" id="L12">public class ClienteService {</span>
+
+	@Autowired
+	private ClienteRepository clienteRepository;
+
+	public String save(Cliente cliente) {
+
+<span class="fc" id="L19">		this.verificarTelefoneCliente(cliente);</span>
+<span class="fc" id="L20">		this.verificarCpfCliente(cliente.getCpf());</span>
+
+<span class="fc" id="L22">		this.clienteRepository.save(cliente);</span>
+<span class="fc" id="L23">		return &quot;Cliente cadastrado com sucesso!&quot;;</span>
+	}
+
+	public String update(Cliente cliente, long id) {
+
+<span class="fc" id="L28">		cliente.setId(id);</span>
+<span class="fc" id="L29">		this.clienteRepository.save(cliente);</span>
+
+<span class="fc" id="L31">		return &quot;Cliente alterado com sucesso!&quot;;</span>
+	}
+
+	
+	//Verifica se já existe o cpf que está sendo cadastrado OU alterado 
+	public void verificarCpfCliente(String cpf) {
+<span class="fc" id="L37">		List&lt;Cliente&gt; clienteComCpf = clienteRepository.findByCpfStartingWith(cpf);</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">		if (!clienteComCpf.isEmpty()) {</span>
+<span class="fc" id="L39">			throw new RuntimeException(&quot;CPF já cadastrado!&quot;);</span>
+		}
+<span class="fc" id="L41">	}</span>
+
+	//Verifica se o cliente tem um telefone cadastrado, p/ cadastraCompleto setar true ou false
+	public void verificarTelefoneCliente(Cliente cliente) {
+<span class="pc bpc" id="L45" title="3 of 4 branches missed.">		if (cliente.getTelefone() == null || cliente.getTelefone().trim().isEmpty()) {</span>
+<span class="fc" id="L46">			cliente.setCadastroCompleto(false);</span>
+		} else {
+<span class="nc" id="L48">			cliente.setCadastroCompleto(true);</span>
+		}
+<span class="fc" id="L50">	}</span>
+
+	public String delete(long id) {
+
+<span class="fc" id="L54">		this.clienteRepository.deleteById(id);</span>
+
+<span class="fc" id="L56">		return &quot;Cliente excluido com sucesso!&quot;;</span>
+	}
+
+	public List&lt;Cliente&gt; findAll() {
+
+<span class="fc" id="L61">		List&lt;Cliente&gt; listaClientes = this.clienteRepository.findAll();</span>
+
+<span class="fc" id="L63">		return listaClientes;</span>
+	}
+
+	public Cliente findById(long id) {
+
+<span class="fc" id="L68">		Cliente cliente = this.clienteRepository.findById(id).get();</span>
+
+<span class="fc" id="L70">		return cliente;</span>
+	}
+
+	public List&lt;Cliente&gt; findByCpf(String cpf) {
+<span class="nc" id="L74">		return this.clienteRepository.findByCpfStartingWith(cpf);</span>
+	}
+
+	public List&lt;Cliente&gt; findByNomeClienteIgnoreCaseStartingWith(String nome) {
+
+<span class="fc" id="L79">		return this.clienteRepository.findByNomeClienteIgnoreCaseStartingWith(nome);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

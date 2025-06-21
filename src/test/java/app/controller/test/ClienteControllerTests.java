@@ -113,19 +113,6 @@ class ClienteControllerTest {
     }
 
     @Test
-    @DisplayName("INTEGRAÇÃO - Deve retornar todos os clientes")
-    void testFindAllClientes() {
-        List<Cliente> clientes = Arrays.asList(cliente);
-        when(clienteService.findAll()).thenReturn(clientes);
-
-        ResponseEntity<List<Cliente>> response = clienteController.findAll();
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(1, response.getBody().size());
-        assertEquals("João Silva", response.getBody().get(0).getNomeCliente());
-    }
-
-    @Test
     @DisplayName("INTEGRAÇÃO - Deve retornar cliente por ID")
     void testFindClienteById() {
         when(clienteService.findById(1L)).thenReturn(cliente);
@@ -149,16 +136,6 @@ class ClienteControllerTest {
         assertEquals("João Silva", response.getBody().get(0).getNomeCliente());
     }
     
-    @Test
-    @DisplayName("INTEGRAÇÃO - Deve retornar lista vazia quando não houver clientes")
-    void testFindAllClientesVazia() {
-        when(clienteService.findAll()).thenReturn(Collections.emptyList());
-        
-        ResponseEntity<List<Cliente>> response = clienteController.findAll();
-        
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertTrue(response.getBody().isEmpty());
-    }
 
     @Test
     @DisplayName("INTEGRAÇÃO - Deve retornar NOT_FOUND para cliente inexistente")

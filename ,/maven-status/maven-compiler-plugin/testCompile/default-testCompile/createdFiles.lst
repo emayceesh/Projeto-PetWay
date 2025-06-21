@@ -1,0 +1,9 @@
+app\service\test\ServicosServiceTest.class
+app\controller\test\AnimaisControllerUnitTest.class
+app\controller\test\AnimaisControllerTest.class
+app\controller\test\ProdutosControllerTest.class
+app\service\test\ClienteServiceTests.class
+app\service\test\ProdutosServiceTest.class
+app\controller\test\AgendamentoControllerTest.class
+app\controller\test\ServicoControllerTest.class
+app\controller\test\ClienteControllerTest.class

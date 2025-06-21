@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Agendamento.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PetWay</a> &gt; <a href="index.source.html" class="el_package">app.entity</a> &gt; <span class="el_source">Agendamento.java</span></div><h1>Agendamento.java</h1><pre class="source lang-java linenums">package app.entity;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+public class Agendamento {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull(message = &quot;Data e hora não podem estar vazias!&quot;)
+    @JsonFormat(pattern = &quot;yyyy-MM-dd'T'HH:mm:ss&quot;)
+    private LocalDateTime dataHora;
+
+
+    private String hora;
+
+    private Boolean buscarEntregar = false;//começa em false já, caso seja true, tera busca e entrega do pet
+
+    @Size(max = 100, message = &quot;Observação deve ter no máximo 100 caracteres.&quot;)
+    private String observacoes;
+
+    @ManyToOne
+    @JoinColumn(name = &quot;fk_cliente_id&quot;)
+    @JsonIgnoreProperties({&quot;agendamentos&quot;, &quot;animais&quot;})
+    private Cliente cliente;
+
+    @ManyToMany
+    @JoinTable(
+            name = &quot;agendamento_animal&quot;,
+            joinColumns = @JoinColumn(name = &quot;agendamento_id&quot;),
+            inverseJoinColumns = @JoinColumn(name = &quot;animal_id&quot;)
+    )
+    @JsonIgnoreProperties({&quot;agendamentos&quot;, &quot;cliente&quot;})
+    private List&lt;Animais&gt; animais;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = &quot;agendamento_servico&quot;,
+            joinColumns = @JoinColumn(name = &quot;agendamento_id&quot;),
+            inverseJoinColumns = @JoinColumn(name = &quot;servico_id&quot;)
+    )
+    @JsonIgnoreProperties(&quot;agendamentos&quot;)
+    private List&lt;Servicos&gt; servicos;
+
+    public void setId(long id) {
+<span class="fc" id="L74">        this.id = id;</span>
+
+<span class="fc" id="L76">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

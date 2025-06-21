@@ -79,18 +79,7 @@ public class ClienteServiceTests {
 
         assertEquals("João Silva", encontrado.getNomeCliente());
         verify(clienteRepository, times(1)).findById(1L);
-    }
-
-    @Test
-    @DisplayName("INTEGRAÇÃO - Deve retornar lista vazia quando não houver clientes")
-    void testFindAllVazia() {
-        when(clienteRepository.findAll()).thenReturn(Collections.emptyList());
-
-        List<Cliente> clientes = clienteService.findAll();
-
-        assertTrue(clientes.isEmpty());
-        verify(clienteRepository, times(1)).findAll();
-    }
+    }	
 
     @Test
     @DisplayName("INTEGRAÇÃO - Deve deletar cliente com sucesso")

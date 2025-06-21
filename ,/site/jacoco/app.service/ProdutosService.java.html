@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProdutosService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PetWay</a> &gt; <a href="index.source.html" class="el_package">app.service</a> &gt; <span class="el_source">ProdutosService.java</span></div><h1>ProdutosService.java</h1><pre class="source lang-java linenums">package app.service;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import app.entity.Produtos;
+import app.repository.ProdutosRepository;
+
+@Service
+<span class="fc" id="L13">public class ProdutosService {</span>
+
+	@Autowired
+	private ProdutosRepository produtoRepository;
+
+	public String save(Produtos produto) {
+<span class="fc bfc" id="L19" title="All 2 branches covered.">	    if (produto.getQuantidade() &lt; 0) {</span>
+<span class="fc" id="L20">	        throw new IllegalArgumentException(&quot;Quantidade em estoque não pode ser negativa&quot;);</span>
+	    }
+<span class="fc bfc" id="L22" title="All 2 branches covered.">	    if (produto.getPreco().compareTo(BigDecimal.ZERO) &lt;= 0) {</span>
+<span class="fc" id="L23">	        throw new IllegalArgumentException(&quot;Preço deve ser positivo&quot;);</span>
+	    }
+	    
+<span class="fc" id="L26">	    produtoRepository.save(produto);</span>
+<span class="fc" id="L27">	    return &quot;Produto salvo com sucesso!&quot;;</span>
+	}
+
+	public String update(Produtos produto, long id) {
+<span class="fc bfc" id="L31" title="All 2 branches covered.">		if (!produtoRepository.existsById(id)) {</span>
+<span class="fc" id="L32">			return &quot;Produto não encontrado no produto!&quot;;</span>
+		}
+
+<span class="fc" id="L35">		produto.setId(id);</span>
+<span class="fc" id="L36">		produtoRepository.save(produto);</span>
+<span class="fc" id="L37">		return &quot;Produto atualizado com sucesso!&quot;;</span>
+	}
+
+	public String delete(long id) {
+<span class="fc bfc" id="L41" title="All 2 branches covered.">		if (!produtoRepository.existsById(id)) {</span>
+<span class="fc" id="L42">			return &quot;Produto não encontrado para exclusão!&quot;;</span>
+		}
+
+<span class="fc" id="L45">		produtoRepository.deleteById(id);</span>
+<span class="fc" id="L46">		return &quot;Produto deletado com sucesso!&quot;;</span>
+	}
+	
+	public Produtos findById(long id) {
+
+<span class="fc" id="L51">		Produtos produto = this.produtoRepository.findById(id).get();</span>
+
+<span class="fc" id="L53">		return produto;</span>
+	}
+
+	public List&lt;Produtos&gt; findAll() {
+<span class="fc" id="L57">		return produtoRepository.findAll();</span>
+	}
+
+	public List&lt;Produtos&gt; findByNomeIgnoreCaseStartingWith(String nome) {
+<span class="fc" id="L61">		return produtoRepository.findByNomeIgnoreCaseStartingWith(nome);</span>
+	}
+
+	public List&lt;Produtos&gt; findByCategoriaIgnoreCaseStartingWith(String categoria) {
+<span class="fc" id="L65">		return produtoRepository.findByCategoriaIgnoreCaseStartingWith(categoria);</span>
+	}
+	
+	public List&lt;Produtos&gt; findByNomeAndCategoria(String nome, String categoria) {
+<span class="fc" id="L69">	    return this.produtoRepository.findByNomeContainingIgnoreCaseAndCategoriaContainingIgnoreCase(nome, categoria);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
